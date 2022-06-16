@@ -153,8 +153,10 @@ chmod 0700 -R /var/www/
 cd /etc/ssl && openssl dhparam -out dhparam.pem 2048 && cd
 mkdir /etc/ssl/trusted
 wget 'https://letsencrypt.org/certs/isrgrootx1.pem' -O /etc/ssl/trusted/chain.pem
-chown -R www-data:www-data /etc/ssl
-chown -R www-data:www-data /etc/letsencrypt
+
+#chown -R www-data:www-data /etc/ssl #might be a security risk
+#chown -R www-data:www-data /etc/letsencrypt #might be a security risk
+
 #chown -R www-data:www-data /etc/letsencrypt/live/ #directory might not yet created
 #chown -R www-data:www-data /etc/letsencrypt/archive/ #directory might not yet created
 ###################################################
