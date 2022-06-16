@@ -155,6 +155,8 @@ mkdir /etc/ssl/trusted
 wget 'https://letsencrypt.org/certs/isrgrootx1.pem' -O /etc/ssl/trusted/chain.pem
 chown -R www-data:www-data /etc/ssl
 chown -R www-data:www-data /etc/letsencrypt
+#chown -R www-data:www-data /etc/letsencrypt/live/ #directory might not yet created
+#chown -R www-data:www-data /etc/letsencrypt/archive/ #directory might not yet created
 ###################################################
 
 
@@ -211,8 +213,19 @@ systemctl enable nginx
 systemctl restart nginx
 ###################################
 ############## SSL GENERATION ###############
-certbot certonly --agree-tos --non-interactive --webroot --email $email -d $domain -w /var/www/main/
-certbot certonly --agree-tos --non-interactive --webroot --email $email -d media.$domain -w /var/www/media/
+certbot certonly --agree-tos --non-interactive --email $email -d $domain --webroot --webroot-path /var/www/main/
+certbot certonly --agree-tos --non-interactive --email $email -d media.$domain --webroot --webroot-path /var/www/media/
+
+#...
+chown -R www-data:www-data /etc/letsencrypt/live/ #init : one time only 
+chown -R www-data:www-data /etc/letsencrypt/archive/ #init : one time only 
+#...
+
+chown -R www-data:www-data /etc/letsencrypt/live/$domain
+chown -R www-data:www-data /etc/letsencrypt/archive/$domain
+
+chown -R www-data:www-data /etc/letsencrypt/live/media.$domain
+chown -R www-data:www-data /etc/letsencrypt/archive/media.$domain
 #############################################
 ############### SSL CONFS ###################
 mv /etc/nginx/confs-nossl/main.conf /etc/nginx/confs/main.conf
