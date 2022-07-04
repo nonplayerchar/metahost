@@ -1,0 +1,18 @@
+# file : /etc/mysql/mariadb.conf.d/50-server2.cnf    '50-server2.cnf'
+#mysqld2 is the instance name
+
+[mysqld2]
+user                           = mysql
+pid-file                       = /run/mysqld/mysqld2.pid
+socket                         = /run/mysqld/mysqld2.sock
+basedir                        = /usr
+datadir                        = /var/lib/mysql2
+tmpdir                         = /tmp
+lc-messages-dir                = /usr/share/mysql
+bind-address                   = 127.0.0.1
+#query_cache_size               = 16M
+log_error                      = /var/log/mysql/mysqld2_error.log
+expire_logs_days               = 3
+character-set-server           = utf8mb4
+collation-server               = utf8mb4_general_ci
+port                           = 3307
